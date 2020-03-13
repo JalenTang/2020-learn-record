@@ -1,0 +1,32 @@
+# Learn Design Pattern
+
+## 1.什么是设计模式
+
+## 2.设计模式的分类
+
+1. 创建型设计模式 Creational Design Patterns
+2. 结构型设计模式 Structural Design Patterns
+3. 行为型设计模式 Behavioral Design Patterns
+
+## 3.设计模式具体有哪些(常用的)
+
+### 观察者模式 Observer
+
+- 观察者模式属于行为设计模式，指的是一个对象（Subject）维持一系列依赖于它的对象（Observer），当有关状态发生变更时 Subject 对象则通知一系列 Observer 对象进行更新
+- 实际运用：
+    1. Vue的双向绑定响应式原理`Dep`和`Watcher`
+
+### 发布订阅模式 Publish/Subscribe
+
+- 发布订阅模式是一种消息范式，消息的发送者（发布者Publisher）不会将消息直接发送消息的接收者（订阅者Subscriber），而是通过一个交流中介（Communication infrastructureChannel）将两者串联起来，过滤和分配所有输入的信息
+- 发布订阅模式最大的优点就是**松耦合**和**可扩展性**，发布者与订阅者不需要知道对方的存在
+- 实际案例：
+    1. `node.js`的`Event`模块
+    2. mq消息队列
+    3. `eventbus`
+
+### 单例模式 Singleton
+
+- 单例模式属于创建型设计模式，该模式下单例对象的类必须保证只有一个实例存在
+- 实践案例：
+    1. `Vuex`设计思想,一个Vue的实例只会`install`一次`Vuex`插件
