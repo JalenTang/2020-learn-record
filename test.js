@@ -1,16 +1,47 @@
-let obj1 = { name: '小明' }
-let arr = []
-arr = [obj1]
-obj1 = null
+const callbacks = []
+let timerFunc
+let isUsingMicroTask = false
 
-console.log(obj1);
-console.log(arr[0]);
+if (typeof Promise !== 'undefined') {
+    const p = Promise.resolve
 
-let obj2 = { name: '小明' }
-let ws = new WeakSet()
-ws.add(obj2)
-obj2 = null
+    timerFunc = () => {
+        p.then(flushCallbacks)
+    }
+    isUsingMicroTask = true
+} else if (typeof MutationObserver !== 'undefined') {
+    let couter = 1
+    const mutationObserver = new MutationObserver(flushCallbacks)
+    const textNode = document.createTextNode(String(couter))
+    mutationObserver.observe(textNode, {
+        characterData: true
+    })
 
-console.log(obj2);
-console.log(ws);
+    timerFunc = () => {
+        couter = (couter + 1) % 2
+        textNode.data = String(couter)
+    }
+    isUsingMicroTask = true
+} else if () {
+    timerFunc = () => {
+        setTimeout(flushCallbacks, 0)
+    }
+} else {
+    timerFunc = () => {
+        setTimeout(flushCallbacks, 0)
+    }
+}
 
+
+function flushCallbacks() {
+    const copies = callbacks.slice(0)
+    callbacks.length = 0
+    for (let i = 0;i < copies.length;i++) {
+        copies[i]()
+    }
+}
+
+
+function nextTick(cb, ctx) {
+    
+}
