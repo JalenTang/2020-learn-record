@@ -37,7 +37,16 @@
 ### 其他知识点
 
 1. 函数`setTimeout`接收两个参数，待加入队列消息和一个时间值，这个时间值仅仅表示消息被实际加入队列的最小延迟时间，而非确切的等等时间
-2. 异步过程中的回调函数，一定不在当前这一轮事件循环中执行
-3. Vue中`nextTick()`的底层原理
+2. Vue中`nextTick()`的底层原理
+
+### 参考文章
+
+1. [任务，微任务，队列](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
+2. [HTML Standard](https://html.spec.whatwg.org/multipage/webappapis.html#event-loop-processing-model)
+3. [MutationObserver只是浮云，microtask才是核心](https://github.com/Ma63d/vue-analysis/issues/6)
+4. [从event loop规范探究javaScript异步及浏览器更新渲染时机](https://github.com/aooy/blog/issues/5)
+5. [从Vue.js源码看nextTick机制](https://zhuanlan.zhihu.com/p/30451651)
+6. [nextTick为什么要microtask优先？](https://juejin.im/post/5d57994ef265da03bd051969#comment)
+7. [浏览器的工作原理：新式网络浏览器幕后揭秘](https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/)
 
 ## Garbage Collection垃圾收集&内存
