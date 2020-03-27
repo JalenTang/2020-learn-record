@@ -1,47 +1,12 @@
-const callbacks = []
-let timerFunc
-let isUsingMicroTask = false
-
-if (typeof Promise !== 'undefined') {
-    const p = Promise.resolve
-
-    timerFunc = () => {
-        p.then(flushCallbacks)
-    }
-    isUsingMicroTask = true
-} else if (typeof MutationObserver !== 'undefined') {
-    let couter = 1
-    const mutationObserver = new MutationObserver(flushCallbacks)
-    const textNode = document.createTextNode(String(couter))
-    mutationObserver.observe(textNode, {
-        characterData: true
-    })
-
-    timerFunc = () => {
-        couter = (couter + 1) % 2
-        textNode.data = String(couter)
-    }
-    isUsingMicroTask = true
-} else if () {
-    timerFunc = () => {
-        setTimeout(flushCallbacks, 0)
-    }
-} else {
-    timerFunc = () => {
-        setTimeout(flushCallbacks, 0)
-    }
+function Hero(name, options) {
+    this.name = name
+    this.options = options
 }
 
+const yasuo = new Hero('yasuo', { country: 'Japan' })
 
-function flushCallbacks() {
-    const copies = callbacks.slice(0)
-    callbacks.length = 0
-    for (let i = 0;i < copies.length;i++) {
-        copies[i]()
-    }
-}
-
-
-function nextTick(cb, ctx) {
-    
-}
+console.log(Hero.prototype.constructor === Hero); // true
+console.log(yasuo.__proto__ === Hero.prototype); // true
+console.log(Object.getPrototypeOf(yasuo) === Hero.prototype); // true
+console.log(Hero.prototype.__proto__ === Object.prototype); // true
+console.log(Object.prototype.__proto__); // null
