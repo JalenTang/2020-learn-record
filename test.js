@@ -1,12 +1,9 @@
-function Hero(name, options) {
-    this.name = name
-    this.options = options
+function getUrl(path) {
+    const href = 'http://tangjinlei.com/#article'
+    const i = href.indexOf('#')
+    const base = i >= 0 ? href.slice(0, i) : href
+    return `${base}#${path}`
 }
 
-const yasuo = new Hero('yasuo', { country: 'Japan' })
-
-console.log(Hero.prototype.constructor === Hero); // true
-console.log(yasuo.__proto__ === Hero.prototype); // true
-console.log(Object.getPrototypeOf(yasuo) === Hero.prototype); // true
-console.log(Hero.prototype.__proto__ === Object.prototype); // true
-console.log(Object.prototype.__proto__); // null
+const res = getUrl('/about') // http://tangjinlei.com/#/about
+console.log(res);

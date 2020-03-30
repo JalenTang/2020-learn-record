@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <button id="btn">设置name</button>
+</head>
+
+<body>
+    <script>
+        window.addEventListener('storage', e => {
+            console.log(e);
+        }, false)
+
+        document.getElementById('btn').onclick = () => {
+            window.localStorage.setItem('name', 'Jalen')
+            const name = window.localStorage.getItem('name')
+            console.log(name);
+        }
+    </script>
+</body>
+
+</html>

@@ -2,22 +2,25 @@
 
 ## 构造函数和实例、原型和原型链
 
-### 
+### 构造函数和普通函数
+
+- 构造函数和普通函数的本质都是函数，直接用于调用的就是普通函数，而能使用`new`关键字生成**实例**的就是构造函数，构造函数的首字母一般大写，便于区分；
 
 ### 注意点
+
 - 只有函数才有`prototype`属性
 
-``` javascript
+```javascript
 function Hero(name, options) {
-    this.name = name
-    this.options = options
+  this.name = name
+  this.options = options
 }
 const yasuo = new Hero('yasuo', { country: 'Japan' })
 
-Hero.prototype.constructor === Hero; // true
-yasuo.__proto__ === Hero.prototype; // true
-Object.getPrototypeOf(yasuo) === Hero.prototype; // true
-Object.prototype.__proto__; // null
+Hero.prototype.constructor === Hero // true
+yasuo.__proto__ === Hero.prototype // true
+Object.getPrototypeOf(yasuo) === Hero.prototype // true
+Object.prototype.__proto__ // null
 ```
 
 <img src="../images/原型和原型链.png" width="400" height="400" alt="原型和原型链" />
