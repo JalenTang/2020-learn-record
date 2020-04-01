@@ -5,20 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <button id="btn">设置name</button>
 </head>
 
 <body>
+    <div id="par">
+        <div id="child-1">
+            <span id="child-1-1"></span>
+        </div>
+        <div id="child-2">
+            <span id="child-2-1"></span>
+            <span id="child-2-2"></span>
+            <span id="child-2-3"></span>
+        </div>
+        <div id="child-3">
+            <span id="child-3-1"></span>
+            <span id="child-3-2"></span>
+        </div>
+    </div>
     <script>
-        window.addEventListener('storage', e => {
-            console.log(e);
-        }, false)
+        window.onload = () => {
+            const nodes = $('par')
+            const tarNode = $('child-2-2')
 
-        document.getElementById('btn').onclick = () => {
-            window.localStorage.setItem('name', 'Jalen')
-            const name = window.localStorage.getItem('name')
-            console.log(name);
+
+            function bfs(nodes) {
+                const queue = []
+                if (tarNode) {
+
+                }
+            }
+
+            function $(id) {
+                return document.getElementById(id)
+            }
         }
     </script>
 </body>

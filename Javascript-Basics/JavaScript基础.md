@@ -75,4 +75,4 @@ Object.prototype.__proto__ // null
 6. [nextTick 为什么要 microtask 优先？](https://juejin.im/post/5d57994ef265da03bd051969#comment)
 7. [浏览器的工作原理：新式网络浏览器幕后揭秘](https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/)
 
-## Garbage Collection 垃圾收集&内存
+## Garbage Collection 垃圾收集&内存管理
