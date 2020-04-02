@@ -1,9 +1,12 @@
-function getUrl(path) {
-    const href = 'http://tangjinlei.com/#article'
-    const i = href.indexOf('#')
-    const base = i >= 0 ? href.slice(0, i) : href
-    return `${base}#${path}`
-}
+function throttle(func, wait) {
+    let previous = 0
 
-const res = getUrl('/about') // http://tangjinlei.com/#/about
-console.log(res);
+    return function() {
+        const context = this
+        const now = +Date().now()
+        if (now - previous > wait) {
+            func.apply(context, arguments)
+            previous = now
+        } 
+    }
+}

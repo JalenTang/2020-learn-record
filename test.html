@@ -1,44 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cmn-Hans">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge, chrome=1">
+    <title>debounce</title>
+    <script src="https://cdn.bootcss.com/underscore.js/1.9.1/underscore-min.js"></script>
+    <style>
+        #container {
+            width: 100%;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            color: #fff;
+            background-color: #444;
+            font-size: 30px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="par">
-        <div id="child-1">
-            <span id="child-1-1"></span>
-        </div>
-        <div id="child-2">
-            <span id="child-2-1"></span>
-            <span id="child-2-2"></span>
-            <span id="child-2-3"></span>
-        </div>
-        <div id="child-3">
-            <span id="child-3-1"></span>
-            <span id="child-3-2"></span>
-        </div>
-    </div>
+    <div id="container"></div>
     <script>
-        window.onload = () => {
-            const nodes = $('par')
-            const tarNode = $('child-2-2')
+        let count = 1;
+        const container = document.getElementById('container');
 
+        function mousemove(e) {
+            console.log(e);
+            container.innerHTML = count++;
+        }
 
-            function bfs(nodes) {
-                const queue = []
-                if (tarNode) {
+        function throttle(func, wait) {
+            let previous = 0
 
+            return function () {
+                const context = this
+                const now = +Date().now()
+                if (now - previous > wait) {
+                    func.apply(context, arguments)
+                    previous = now
                 }
             }
+        }
 
-            function $(id) {
-                return document.getElementById(id)
+        function debounce(func, wait) {
+            let timeout
+
+            return function () {
+                const context = this
+
+                if (timeout) clearTimeout(timeout)
+                timeout = setTimeout(() => {
+                    func.apply(context, arguments)
+                }, wait)
             }
         }
+
+        container.onmousemove = debounce(mousemove, 1000)
+        // container.onmousemove = _.debounce(mousemove, 1000)
+
+        // container.onmousemove = throttle(mousemove, 1000)
+        // container.onmousemove = _.throttle(mousemove, 1000)
+
     </script>
 </body>
 
