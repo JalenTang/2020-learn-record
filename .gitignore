@@ -1,4 +1,5 @@
 .idea
+test.js
 Vue/vue/vue-dev/*
 Vue/vue-router/vue-router-dev/*
 Vue/vuex/vuex-dev/*
