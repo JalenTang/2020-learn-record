@@ -8,6 +8,10 @@
 - `plugin`
 - `loader`
 
+## HMR 原理
+
+- HMR: Hot Module Replacement，模块热替换，运行时对模块的替换、添加和删除，无需刷新页面
+
 ## 常用插件
 
 ### html-webpack-plugin：打包过程中自定义 HTML 文件的创建
@@ -26,17 +30,17 @@ module.exports = {
       filename: 'index.html',
       template: '', // html模板，默认ejs
       templateContent: false,
-      /* 
-      自定义html模板种，通过 
-        htmlWebpackPlugin.options 
-        htmlWebpackPlugin.tags 
-        htmlWebpackPlugin.files 
-      重写一些默认参数 
+      /*
+      自定义html模板种，通过
+        htmlWebpackPlugin.options
+        htmlWebpackPlugin.tags
+        htmlWebpackPlugin.files
+      重写一些默认参数
       具体配置 https://github.com/jantimon/html-webpack-plugin/blob/master/examples/template-parameters/webpack.config.js
       */
-      templateParameters: false, 
+      templateParameters: false,
       favicon: ``, // html图标
-      meta: {} // meta标签 比如 { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' } 
+      meta: {} // meta标签 比如 { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
       minify: true, // 代码压缩
       inject: true, // 静态资源注入的位置，如'head'/'body'
       scriptLoading: 'blocking', // 'blocking'|'defer' js脚本载入方式
@@ -82,9 +86,7 @@ const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 const smp = new SpeedMeasurePlugin(options);
 
 module.exports = smp.wrap({
-  plugins: [
-    new MyPlugin(), new MyOtherPlugin()
-  ],
+  plugins: [new MyPlugin(), new MyOtherPlugin()],
 });
 ```
 
