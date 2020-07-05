@@ -37,7 +37,7 @@ const levelOrder = function (root) {
             }
         }
 
-        result.push(layer)
+        result.push(level)
     }
 
     return result
