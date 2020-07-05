@@ -19,21 +19,49 @@
  * @return {number}
  */
 var maxDepth = function (root) {
-    if (!root) return 0
-    if (!root.children || root.children.length === 0) return 1
+    if (root === null) return 0
 
-    var res = 0
-    var base = 0
 
-    if (root.children.length > 0) {
-        for (child of root.children) {
-            console.log(child);
-            console.log(maxDepth(child), res);
-            res = Math.max(maxDepth(child), base)
+    var depthList = []
+
+    for (var i = 0; i < root.children.length; i++) {
+        console.log(root.children[i]);
+        depthList.push(maxDepth(root.children[i]))
+    }
+
+    console.log('--------------');
+
+    // console.log(depthList);
+
+    return Math.max(...depthList) + 1
+};
+
+/**
+ * @param {Node} root
+ * @return {number}
+ */
+var maxDepthWithBFS = function (root) {
+    if (root === null) return 0
+
+    var depth = 0
+
+    // 利用BFS遍历 按层分组
+    var queue = []
+    queue.push(root)
+
+    while (queue.length !== 0) {
+        var size = queue.length
+
+        for (var i = 0; i < size; i++) {
+            var node = queue.shift()
+            depth ++
+            if(node.children) {
+                queue.push(node.children)
+            }
         }
     }
-    
-    return res
+
+    return depth
 };
 
 var root = {
