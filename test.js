@@ -1,35 +1,48 @@
-/**
- * @param {number[]} cost
- * @param {number[]} val
- * @param {number} total
- * @return {number}
- */
-const zeroOnePack = function (cost, val, total) {
-    const dp = []
+function sum(a, b) {
+	let aIndex = a.length - 1;
+	let bIndex = b.length - 1;
+	let cur = 0;
+	let arr = [];
+	let res;
 
-    const base = Array(total + 1).fill(0)
-    dp.push(base)
+	while (aIndex >= 0 && bIndex >= 0) {
+		let m = Number(a[aIndex]);
+		let n = Number(b[bIndex]);
+		if (m + n + cur >= 10) {
+			arr.push((m + n + cur) % 10);
+			cur = Math.floor((m + n + cur) / 10);
+		} else {
+			arr.push((m + n + cur) % 10);
+			cur = 0;
+		}
 
-    const len = val.length
-    for (let i = 1; i < len + 1; i++) {
-        dp.push([0])
-        for (let j = 1; j < total + 1; j++) {
-            let [inPack, notInPack] = [0, 0]
-            if (j >= cost[i - 1]) {
-                inPack = dp[i - 1][j - cost[i - 1]] + val[i - 1]  // 装
-                notInPack = dp[i - 1][j] // 不装
-                dp[i][j] = Math.max(inPack, notInPack)
-            } else {
-                dp[i][j] = dp[i - 1][j] // 只能不装
-            }
-        }
-    }
+		aIndex--;
+		bIndex--;
 
-    console.log(dp);
+		if (aIndex < 0 && bIndex >= 0) {
+			console.log(b.slice(0, bIndex + 1));
+			arr.push(Number(b.slice(0, bIndex + 1).toString()) + cur);
+			break;
+		}
 
-    return dp[len][total]
-};
+		if (bIndex < 0 && aIndex >= 0) {
+			arr.push(Number(a.slice(0, aIndex + 1).toString()) + cur);
+			break;
+		}
 
-const res = zeroOnePack([1, 2, 3], [2, 3, 1], 6);
-console.log(res);
+		if (aIndex < 0 && aIndex < 0) {
+			if (cur > 0) {
+				arr.push(cur);
+			}
 
+			break;
+		}
+	}
+	console.log(arr);
+	res = arr.reverse().join('');
+	console.log(res);
+	return res;
+}
+
+// "167141802233061013023557799168121920809282032"
+sum('401716832807512840963', '167141802233061013023557397451289113296441069');
