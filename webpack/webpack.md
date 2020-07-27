@@ -3,6 +3,9 @@
 ## 基本概念
 
 - `webpack` 是一个现代的 JavaScript 应用的静态模块打包器（module bundler）
+
+## 基本配置文件 API
+
 - `entry`
 - `output`
 - `plugin`
@@ -90,4 +93,49 @@ module.exports = smp.wrap({
 });
 ```
 
-## 优化
+## 优化 optimization 的一些配置项
+
+### splitChunks 分割块
+
+- `splitChunks.automaticNameDelimiter:string = '~'`：表示 chunk 分割后的文件名称分隔符
+
+- `splitChunks.chunks`：`chunks`选项表示需要进行代码优化的块，值可以是字符串'async'/'initial'/'all'，也可接受一个函数 `(chunks) => {}`
+
+  1. **initial** 表示只从入口模块拆分
+  2. **async** 表示拆分异步加载的模块，`import()`
+  3. **all** 表示以上都包括
+
+- `splitChunks.maxAsyncRequests:number = 30`：按需加载时并行请求的最大数量
+
+- `splitChunks.maxInitialRequests:number = 30`：入口分割的最大并行请求数
+
+- `splitChunks.minSize:number = 30000`：表示分理处的`chunk`的最小尺寸，即文件大于`minSize`才会分离为`chunk`
+
+- `splitChunks.minChunks:number = 1`：表示一个模块至少要被`minChunks`个`chunk`所包含才能分割
+
+- `splitChunks.name:boolean = true | function(module, chunks, cacheGroupKey):string`：表示代码分割之后的 `chunk` 的名字，默认为 `true`，表示名字由`chunks`和`cacheGroups`的 `key`自动生成
+
+- `splitChunks.cacheGroups: {}`：缓存组相关配置，继承所有splitChunks的属性，`test`，`priority`，`reuseExistingChunk`为独有属性
+
+```javascript
+module.exports = {
+  // ...
+  optimization: {
+    splitChunks: {
+      automaticNameDelimiter: '~',
+      chunks: 'initial' | 'async' | 'all' | (chunks) => chunks.name !== 'my-chunk',
+      maxAsyncRequests: 30,
+      maxInitialRequests: 30,
+      minSizeL: 30000,
+      minChunks: 2,
+      name: true,
+      cacheGroups: {
+        test: /[\\\/]node_modules[\\\/]/, // 选择缓存组的模块，值可以是 string | regex | (module,chunk) => {}
+        priority: 10, // 一个模块可以命中多个缓存组，priority表示模块命中时的优先级，default组优先级为负数，自定义组优先级为0
+        reuseExistingChunk: true, // 重用分离出的代码
+        enforce: true, // true 表示忽略分离模块的最大最小限制，强行分离模块，默认值false。
+      }
+    }
+  }
+}
+```
