@@ -6,20 +6,21 @@
 
 - 构造函数和普通函数的本质都是函数，直接用于调用的就是普通函数，而能使用`new`关键字生成**实例**的就是构造函数，构造函数的首字母一般大写，便于区分；
 
-
-### new一个构造函数的时候发生了什么？
+### new 一个构造函数的时候发生了什么？
 
 1. 创建一个空的对象 `obj = {}`
 2. 将空对象`obj`链接到构造函数的原型
 3. 将对象`obj`作为`this`的上下文
 4. 如果该函数没有返回对象，则返回`this`
 
-``` Javascript
+```Javascript
 function myNew(fn, ...args) {
-   const obj = Object.create(null)
+   const obj = Object.create(Object.prototype)
+   obj.__proto__ = fn.prototype
+   const ret = fn.apply(obj, args)
+   return (typeof ret === 'object' || typeof ret === 'function') && typeof ret !== null ? ret : obj;
 }
 ```
-
 
 ### 注意点
 
@@ -27,15 +28,15 @@ function myNew(fn, ...args) {
 
 ```javascript
 function Hero(name, options) {
-  this.name = name
-  this.options = options
+  this.name = name;
+  this.options = options;
 }
-const yasuo = new Hero('yasuo', { country: 'Japan' })
+const yasuo = new Hero('yasuo', { country: 'Japan' });
 
-Hero.prototype.constructor === Hero // true
-yasuo.__proto__ === Hero.prototype // true
-Object.getPrototypeOf(yasuo) === Hero.prototype // true
-Object.prototype.__proto__ // null
+Hero.prototype.constructor === Hero; // true
+yasuo.__proto__ === Hero.prototype; // true
+Object.getPrototypeOf(yasuo) === Hero.prototype; // true
+Object.prototype.__proto__; // null
 ```
 
 <img src="../images/原型和原型链.png" width="400" height="400" alt="原型和原型链" />
