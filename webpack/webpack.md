@@ -15,7 +15,7 @@
 
 - HMR: Hot Module Replacement，模块热替换，运行时对模块的替换、添加和删除，无需刷新页面
 
-## 常用插件
+## 常用插件 plugins
 
 ### html-webpack-plugin：打包过程中自定义 HTML 文件的创建
 
@@ -93,6 +93,8 @@ module.exports = smp.wrap({
 });
 ```
 
+## 常用 loader
+
 ## 优化 optimization 的一些配置项
 
 ### splitChunks 分割块
@@ -115,7 +117,7 @@ module.exports = smp.wrap({
 
 - `splitChunks.name:boolean = true | function(module, chunks, cacheGroupKey):string`：表示代码分割之后的 `chunk` 的名字，默认为 `true`，表示名字由`chunks`和`cacheGroups`的 `key`自动生成
 
-- `splitChunks.cacheGroups: {}`：缓存组相关配置，继承所有splitChunks的属性，`test`，`priority`，`reuseExistingChunk`为独有属性
+- `splitChunks.cacheGroups: {}`：缓存组相关配置，继承所有 splitChunks 的属性，`test`，`priority`，`reuseExistingChunk`为独有属性
 
 ```javascript
 module.exports = {
@@ -139,3 +141,49 @@ module.exports = {
   }
 }
 ```
+
+## sourceMap 详解
+
+### 什么是 SourceMap
+
+一般情况下，用于生成环境的代码都经过代码了压缩、合并和混淆，甚至于代码的编译，因此实际代码都有别于开发代码，不利于调试和除错 debug。  
+而 SourceMap 就是一个存储位置的信息文件，记录了转换后的代码在源码中的位置（映射），方便于开发者的定位和除错。
+
+### SourceMap 的使用
+
+1. 在转换后的文件末尾加上 `//# sourceMappingURL=xxx.js.map`
+2. 生成一个`xxx.js.map`文件。一个`xxx.js.map`通常的格式如下：
+
+```javascript
+{
+  version: 3, // 映射的版本号
+  file: 'xxx.js', // 映射后的文件名
+  sourcesRoot: '', // 映射后的文件目录
+  sources: [], // 转换前的文件列表
+  names: '', // 转换前的变量名和属性名
+  mappings: '',
+}
+```
+
+3. `mappings`属性详解：
+
+`mappings`属性以字符串的形式记录了位置的详细信息。  
+`mappings`属性分成三层，第一层是行对应，以**分号;**分割；第二层是位置对应，以**逗号，**分割；第三层是位置转换，以 VLQ 编码表示。  
+位置对应的字符串为五位，表示五个字段，从左至右依次表示这个位置**在转换后的代码的列数**，**属于 sources 属性中的哪个文件**，**在转换前的代码的行数**，**在转换前的代码的列数**，**属于 names 属性中的哪个变量(非必需)**
+
+### webpack 中不同 SourceMap 的特点
+
+[webpack devtool 配置](https://webpack.js.org/configuration/devtool/#devtool)
+
+配置项可以看成是 5 种特性的任意组合
+
+1. `eval`：表示使用`eval`包裹代码
+2. `source-map`：表示生成`.map`文件
+3. `cheap`：不包含列信息，不包含loader
+4. `module`：包含loader
+5. `inline`：将.map文件作为DataURI嵌入，不单独生成`.map`文件
+
+### 参考：
+
+1. [Introduction to JavaScript Source Maps](https://www.html5rocks.com/en/tutorials/developertools/sourcemaps/)
+2. [JavaScript Source Map 详解-阮一峰](http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html)
