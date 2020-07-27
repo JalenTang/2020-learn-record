@@ -12,10 +12,13 @@
 
   ```javascript
   const wrap = function (script) {
-    return Module.wrapper[0] + script + Module.wrapper[1];
+  	return Module.wrapper[0] + script + Module.wrapper[1];
   };
 
-  const wrapper = ['(function(exports, require, modeule, __filename, __dirname){ ', '\n});'];
+  const wrapper = [
+  	'(function(exports, require, modeule, __filename, __dirname){ ',
+  	'\n});',
+  ];
   ```
 
 - 基本语法
@@ -23,7 +26,7 @@
   ```javascript
   // a.js
   module.exports = {
-    num: 1,
+  	num: 1,
   };
 
   // index.js
@@ -63,3 +66,13 @@
 更通用的理解：`webpack`中一切文件都是一个`module`，在`webpack`打包编译过程中，一系列的`module`就构成了一个`chunk`，打包完成后，一个`chunk`或者一系列的`chunk`就构成了一个`bundle`
 
 参考：[stackoverflow 的文章：what-are-module-chunk-and-bundle-in-webpack](https://stackoverflow.com/questions/42523436/what-are-module-chunk-and-bundle-in-webpack)
+
+## 3. Webpack 构建流程
+
+初始化构建参数 ===> 绑定事件钩子回调 ===> 确定 Entries 逐一遍历 ===> 使用 loader 编译文件 ===> 输出文件
+
+- 初始化构建参数：`Webpack`首先会读取你在命令行内传入的配置以及项目里`webpack.config.js`里的配置，用于初始化本次构建的配置参数
+- 绑定事件钩子回调：执行配置文件中的`plugins`实例化语句，生成`Compiler`传递给各个`plugin`的`apply`方法，将各个自定义钩子挂载到`webpack`事件流
+- `webpack`读取配置的`entries`参数，从入口文件开始递归遍历所有的文件
+- 在递归遍历文件时，`webpack`开始`Compilation`编译过程，根据配置文件中的`loader`参数对`test`到的文件内容进行编译（buildModule），之后再将编译好的文件内容使用`acorn`解析生成`AST`静态语法树，分析文件的依赖关系逐个拉去依赖模块并重复上述编译过程，最后将所有模块的`require`语法替换成`__webpack__require`来模拟模块化的操作
+- 最后是`emit`阶段，也就是文件输出阶段，我们可以在传入时间的回调`compilation.assets`拿到所需的数据，包括即将输出的资源，代码块`chunk`等等信息
