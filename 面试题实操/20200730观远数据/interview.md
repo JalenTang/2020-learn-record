@@ -25,8 +25,15 @@
 
 具体实现：
 
+`<Link>`标签中 preload 和 prefetch 的作用和区别
+
+1. preload
+
+例如：``
+
 参考文档：
 
 1. [理解 Vue 的路由懒加载](https://juejin.im/post/6844904180285456398)
 2. [路由懒加载的原理讲解](https://blog.csdn.net/weixin_44869002/article/details/106288371)
 3. [webpack 模块方法 import](https://webpack.docschina.org/api/module-methods/#import)
+4. [什么是 Preload，Prefetch 和 Preconnect](https://github.com/fi3ework/blog/issues/32)
