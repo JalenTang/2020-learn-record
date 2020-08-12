@@ -111,5 +111,3 @@ webpack 中也可以通过定义 Magic Comments 来定于资源加载方式：
 2. [路由懒加载的原理讲解](https://blog.csdn.net/weixin_44869002/article/details/106288371)
 3. [webpack 模块方法 import](https://webpack.docschina.org/api/module-methods/#import)
 4. [什么是 Preload，Prefetch 和 Preconnect](https://github.com/fi3ework/blog/issues/32)
-
-##
