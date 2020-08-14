@@ -1,6 +1,5 @@
 /* 发布订阅模式 */
 
-
 class PubSub {
     constructor() {
         this.events = {}
