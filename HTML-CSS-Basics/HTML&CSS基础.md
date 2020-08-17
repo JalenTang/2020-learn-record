@@ -2,6 +2,18 @@
 
 ## HTML
 
+DOM事件流
+
+阻止DOM事件冒泡
+
+- W3C标准：`event.stopPropagation()`
+- IE：`event.cancelBubble()`
+  
+取消默认操作
+
+- W3C标准：`event.preventDefault()`
+- IE：`event.returnValue = false`
+
 ## CSS
 
 ### padding margin 值为百分比时的计算
