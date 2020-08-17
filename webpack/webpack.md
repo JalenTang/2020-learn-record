@@ -13,7 +13,16 @@
 
 ## HMR 原理
 
-- HMR: Hot Module Replacement，模块热替换，运行时对模块的替换、添加和删除，无需刷新页面
+- `HMR`: Hot Module Replacement，模块热替换，运行时对模块的替换、添加和删除，无需刷新页面
+- `webpack`可以配置`HotModuleReplacementPlugin`或`--hot`参数开启
+
+大致流程：
+
+1. `webpack-dev-server`会在本地创建一个`express`服务，并通过`static files`的方式加载本地的文件
+2. `webpack-dev-server`会在本地 http 服务和浏览器端连接一个`websocket` 双向通道
+3. `webpack-dev-server`通过`watch`每个文件的 `hash`(监听文件的修改时间)
+4. 当本地的文件有改动是，`webpack-dev-server`会通过`websocket`通知浏览器({h: xxx, c: {chunks: true}})，告知浏览器哪些chunks有更新，hash是多少
+5. 浏览器端收到通知后，通过jsonp的方式请求加载，并立即执行代码完成页面更新
 
 ## 常用插件 plugins
 
@@ -179,9 +188,9 @@ module.exports = {
 
 1. `eval`：表示使用`eval`包裹代码
 2. `source-map`：表示生成`.map`文件
-3. `cheap`：不包含列信息，不包含loader
-4. `module`：包含loader
-5. `inline`：将.map文件作为DataURI嵌入，不单独生成`.map`文件
+3. `cheap`：不包含列信息，不包含 loader
+4. `module`：包含 loader
+5. `inline`：将.map 文件作为 DataURI 嵌入，不单独生成`.map`文件
 
 ### 参考：
 
