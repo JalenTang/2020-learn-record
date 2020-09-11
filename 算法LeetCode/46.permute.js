@@ -5,39 +5,35 @@
     输出: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2],[3,2,1] ]
 */
 /**
- * 利用visited[]数组筛选元素
+ * 利用visited[]数组筛选元素 回溯
  * @param {number[]} nums
  * @return {number[][]}
  */
-function dfs(nums, list, result, visited) {
-    if (list.length === nums.length) {
-        result.push(list.slice())
-        return
-    }
-
-    for (let i = 0; i < nums.length; i++) {
-        if (visited[i] === 0) {
-            // 典型的回溯模板
-            list.push(nums[i])
-            visited[i] = 1
-            dfs(nums, list, result, visited)
-            visited[i] = 0
-            list.pop()
-        }
-    }
-}
-
 const permute = function (nums) {
     const result = []
-    const list = []
-    const visited = Array(nums.length).fill(0)
-
-    dfs(nums, list, result, visited)
+    const visited = new Set();
+    helper(nums, visited, [])
     return result
+
+    function helper(arr, visited, path) {
+        if (path.length === nums.length) {
+            result.push(path.slice())
+            return
+        }
+
+        for (let i = 0; i < nums.length; i++) {
+            if (visited.has(nums[i])) continue
+            path.push(nums[i])
+            visited.add(nums[i])
+            helper(arr, visited, path)
+            visited.delete(nums[i])
+            path.pop()
+        }
+    }
 };
 
 /**
- * 利用slice删除元素来筛选元素
+ * 利用slice删除元素来筛选元素 递归
  * @param {number} nums 
  * @return {number[][]}
  */
