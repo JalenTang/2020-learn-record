@@ -1,4 +1,4 @@
-/*  TAG ==> 双指针 + 滑动窗口 +Set
+/*  TAG ==> 双指针 + 滑动窗口 + Set
     给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度
 
     输入："abcabcbb"  输出：3
@@ -25,8 +25,31 @@ const lengthOfLongestSubstring = function (s) {
             i++
         }
         set.add(s[j])
-        console.log(set);
         maxLength = Math.max(maxLength, set.size)
     }
     return maxLength
 };
+
+
+/** 用hashMap实现
+ * @param {string} s
+ * @return {number}
+ */
+const lengthOfLongestSubstring = function (s) {
+    if (s.length === 0) return ''
+
+    let result = 0
+    const map = new Map()
+
+    for (let i = 0, j = 0; j < s.length; j++) {
+        if (Array.from(map.keys()).includes(s[j])) {
+            // 取max 是为了保证慢指针的指向不会回跳
+            i = Math.max(i, map.get(s[j]) + 1)
+        }
+        map.set(s[j], j);
+        result = Math.max(result, j - i + 1)
+    };
+
+    return result
+}
+
