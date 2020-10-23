@@ -120,7 +120,7 @@ module.exports = smp.wrap({
 
 - `splitChunks.maxInitialRequests:number = 30`：入口分割的最大并行请求数
 
-- `splitChunks.minSize:number = 30000`：表示分理处的`chunk`的最小尺寸，即文件大于`minSize`才会分离为`chunk`
+- `splitChunks.minSize:number = 30000`：表示分离处的`chunk`的最小尺寸，即文件大于`minSize`才会分离为`chunk`
 
 - `splitChunks.minChunks:number = 1`：表示一个模块至少要被`minChunks`个`chunk`所包含才能分割
 
