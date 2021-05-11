@@ -74,3 +74,59 @@ function post(url, params) {
 }
 // 导出
 module.exports = { get, post };
+
+
+// byte ma 代码
+
+var asyncFn = (i) => new Promise((resolve) => setTimeout(() => resolve(i), 50));
+
+class Pool {
+  pool = 0;
+  MAX = 6;
+  list = [];
+
+  results = [];
+  queues = [];
+
+  constructor(list = []) {
+    this.list = list;
+  }
+
+  exec() {
+    return new Promise((resolve, reject) => {
+
+      for (let i = 0; i < this.list.length; i++) {
+        const cb = () => {
+          this.list[i]().then((res) => {
+            this.results[i] = res;
+            this.pool--;
+            console.log(`执行完成`, i)
+            const next = this.queues.shift();
+            if (next) {
+              this.pool++;
+              next();
+            }
+            if (this.results.length >= this.list.length) {
+              resolve(this.results);
+            }
+          });
+        };
+        if (this.pool < this.MAX) {
+          this.pool++;
+          cb();
+        } else {
+          this.queues.push(cb);
+        }
+      }
+    });
+  }
+}
+var all = (list) => {
+  return new Pool(list).exec();
+};
+
+var list = new Array(100).fill(null).map((v, i) => () => asyncFn(i));
+all(list).then((res) => {
+  console.log(`返回`, res);
+});
+
