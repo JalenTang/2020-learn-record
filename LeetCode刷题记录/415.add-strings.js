@@ -8,7 +8,7 @@
  * @param {string} str2
  * @return {string}
  */
-var addStrings = function(str1, str2) {
+var addStrings = function (str1, str2) {
     let res = ''
     const len1 = str1.length
     const len2 = str2.length
@@ -22,7 +22,7 @@ var addStrings = function(str1, str2) {
         const cur1 = str1.charAt(i)
         const cur2 = str2.charAt(i)
         console.log(cur1, cur2);
-        const temp = parseInt(cur1)+parseInt(cur2) + add
+        const temp = parseInt(cur1) + parseInt(cur2) + add
         add = Math.floor(temp / 10)
         res = (temp - add * 10) + '' + res
     }
