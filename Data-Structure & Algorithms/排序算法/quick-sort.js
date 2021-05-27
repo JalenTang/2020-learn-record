@@ -21,6 +21,27 @@ function quickSort(arr) {
 	return quickSort(left).concat(pivot, quickSort(right));
 }
 
-const arr = Array(10).fill(0).map(i => Math.floor(Math.random() * 100));
+const arr = Array(3).fill(0).map(i => Math.floor(Math.random() * 100));
 const res = quickSort(arr);
 console.log(res);
+
+
+// function quickSort(arr) {
+// 	if (arr.length < 2) return arr;
+
+// 	const base = arr[0];
+
+// 	const left = [];
+// 	const right = [];
+
+// 	for (let i = 1; i < arr.length; i++) {
+// 		if (arr[i] >= base) {
+// 			right.push(arr[i]);
+// 		} else {
+// 			left.push(arr[i]);
+// 		}
+// 	}
+
+// 	// 递归
+// 	return quickSort(left).concat(base, quickSort(right));
+// }
