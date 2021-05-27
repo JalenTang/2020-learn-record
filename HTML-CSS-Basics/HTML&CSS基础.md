@@ -60,6 +60,21 @@ document.addEventListener("DOMContentLoaded", () => {})
 
 ## CSS
 
+### CSS 选择器优先级
+
+- css 选择规则的优先级：按照 css 选择器的权值来比较
+- 权重：是一个相对的概念，是比较各个选择器的一个指标
+- 权值的划分：
+  1. 内联样式 `style` 权值 1000
+  2. ID选择器 `id` 权值 100
+  3. class|属性选择器|伪， `class|[attr]|:hover` 权值 10
+  4. 标签|伪元素，`p | ::before` 权值 1
+  5. 其他，如`通用选择器(*)`|`子选择器(>)`|`相邻选择器(+)` 权值 0
+- css 优先级规则：
+  1. 权值不同，权值高的优先
+  2. 权值相同，后定义的规则优先
+  3. `!important`无条件绝对优先
+
 ### padding margin 值为百分比时的计算
 
 **注意点**：`padding`和`margin`设置为百分比的参照物都是父元素的`width`，无论是`left`，`right`还是`top`，`bottom`
@@ -72,6 +87,36 @@ document.addEventListener("DOMContentLoaded", () => {})
   width: 100%;
   padding-bottom: 100%;
 </style>
+```
+
+### CSS画三角形的几种方式
+
+``` html
+// 1.利用border属性
+<style>
+  width: 0;
+  height: 0;
+  border: 10px solid;
+  border-color: transparent transparent transparent red;
+</style>
+
+
+// 2.canvas
+<div id="canvas"></div>
+<script>
+const canvas = document.querySelector('#id');
+const ctx = canvas.getContext('2d');
+ctx.beginPath();
+ctx.moveTo(75, 50);
+ctx.lineTo(100, 75);
+ctx.lineTo(100, 25);
+ctx.fill()
+</script>
+
+// 3.svg
+<svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="200 100, 100 200, 300 200" style="fill:red;stroke:red;stroke-width:1" />
+</svg>
 ```
 
 ## 浏览器相关
